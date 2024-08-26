@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
+    "bcrypt": "^5.1.1",
     "formik": "^2.4.6",
     "mongoose": "^8.5.3",
     "next": "14.2.5",
@@ -22,6 +23,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
