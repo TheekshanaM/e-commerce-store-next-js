@@ -4,6 +4,7 @@ import "./globals.css";
 import ToastProvider from "@/context/ToastProvider";
 import Navbar from "@/component/nav-bar/Navbar";
 import { Container } from "@mui/material";
+import SessionProvider from "@/context/SessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,15 +18,15 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const x = await dbConnect();
-
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
-        <ToastProvider>
-          <Container fixed>{children}</Container>
-        </ToastProvider>
+        <SessionProvider>
+          <Navbar />
+          <ToastProvider>
+            <Container fixed>{children}</Container>
+          </ToastProvider>
+        </SessionProvider>
       </body>
     </html>
   );

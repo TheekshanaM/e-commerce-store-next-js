@@ -20,3 +20,10 @@ export async function signUp(user: IUser): Promise<serviceResponse> {
 
   return { success: true, data: JSON.parse(JSON.stringify(createdUser)) };
 }
+
+export async function getUserByEmail(email: string) {
+  await dbConnect();
+  const user = await UserModel.findOne({ email: email });
+
+  return user;
+}
