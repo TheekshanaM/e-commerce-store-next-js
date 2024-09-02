@@ -37,7 +37,7 @@ export default function SignIn() {
           <Grid2 container justifyContent="center">
             <Grid2>
               <MUILink href="/sign-up" component={Link} variant="body2">
-                Don't have an account yet? Register now
+                Don&apos;t have an account yet? Register now
               </MUILink>
             </Grid2>
           </Grid2>

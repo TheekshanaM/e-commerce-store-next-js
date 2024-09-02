@@ -1,11 +1,12 @@
 "use client";
 import FormInput from "@/component/form/form-input/FormInput";
 import { Box, Button, Grid2 } from "@mui/material";
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { useToastContext } from "@/hooks/useToastContext";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { TLogin } from "@/lib/types/userType";
 
 export default function SignInForm() {
   const toast = useToastContext();
@@ -14,43 +15,48 @@ export default function SignInForm() {
 
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
 
-  const initialValues = {
+  const initialValues: TLogin = {
     email: "",
     password: "",
+  };
+
+  const validationSchema = Yup.object({
+    email: Yup.string().email("Invalid email address").required("Required"),
+    password: Yup.string()
+      .required("Required")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      ),
+  });
+
+  const handleFormSubmit = async (
+    values: TLogin,
+    { setSubmitting }: FormikHelpers<TLogin>
+  ) => {
+    const response = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false,
+      callbackUrl: callbackUrl,
+    });
+    const error = response?.error;
+    const url = response?.url;
+
+    if (error) {
+      toast.error({ message: error });
+    } else {
+      url && router.push(url);
+    }
+    setSubmitting(false);
   };
 
   return (
     <>
       <Formik
         initialValues={initialValues}
-        validationSchema={Yup.object({
-          email: Yup.string()
-            .email("Invalid email address")
-            .required("Required"),
-          password: Yup.string()
-            .required("Required")
-            .matches(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-              "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-            ),
-        })}
-        onSubmit={async (values, { setSubmitting, resetForm }) => {
-          const response = await signIn("credentials", {
-            email: values.email,
-            password: values.password,
-            redirect: false,
-            callbackUrl: callbackUrl,
-          });
-          const error = response?.error;
-          const url = response?.url;
-
-          if (error) {
-            toast.error({ message: error });
-          } else {
-            url && router.push(url);
-          }
-          setSubmitting(false);
-        }}
+        validationSchema={validationSchema}
+        onSubmit={handleFormSubmit}
       >
         {({ isValid, isSubmitting, handleSubmit }) => (
           <>

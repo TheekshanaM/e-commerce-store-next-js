@@ -17,3 +17,5 @@ export type TSignUpUIForm = TSignUpForm & {
   confirmPassword: string;
   acceptedTerms: boolean;
 };
+
+export type TLogin = Pick<IUser, "email" | "password">;
