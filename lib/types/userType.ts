@@ -12,3 +12,8 @@ export interface IUser {
 }
 
 export type TSignUpForm = Omit<IUser, "createdDate" | "role">;
+
+export type TSignUpUIForm = TSignUpForm & {
+  confirmPassword: string;
+  acceptedTerms: boolean;
+};
