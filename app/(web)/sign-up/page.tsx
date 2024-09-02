@@ -3,7 +3,7 @@ import {
   Box,
   Container,
   CssBaseline,
-  Grid,
+  Grid2,
   Typography,
   Link,
 } from "@mui/material";
@@ -33,13 +33,13 @@ export default function SignUP() {
 
           <SignUpForm />
 
-          <Grid container justifyContent="center">
-            <Grid item>
+          <Grid2 container justifyContent="center">
+            <Grid2>
               <Link href="#" variant="body2">
                 Already have an account? Sign in
               </Link>
-            </Grid>
-          </Grid>
+            </Grid2>
+          </Grid2>
         </Box>
       </Container>
     </>

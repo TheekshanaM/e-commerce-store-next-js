@@ -2,7 +2,7 @@
 import FormCheckbox from "@/component/form/form-checkbox/FormCheckbox";
 import FormInput from "@/component/form/form-input/FormInput";
 import { signUpAction } from "@/lib/actions/user-action";
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid2 } from "@mui/material";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useToastContext } from "@/hooks/useToastContext";
@@ -70,52 +70,52 @@ export default function SignUpForm() {
               onSubmit={handleSubmit}
               sx={{ mt: 3 }}
             >
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
+              <Grid2 container spacing={2}>
+                <Grid2 size={{ xs: 12, sm: 6 }}>
                   <FormInput
                     autoComplete="given-name"
                     name="firstName"
                     label="First Name"
                     autoFocus
                   />
-                </Grid>
-                <Grid item xs={12} sm={6}>
+                </Grid2>
+                <Grid2 size={{ xs: 12, sm: 6 }}>
                   <FormInput
                     label="Last Name"
                     name="lastName"
                     autoComplete="family-name"
                   />
-                </Grid>
-                <Grid item xs={12}>
+                </Grid2>
+                <Grid2 size={{ xs: 12 }}>
                   <FormInput
                     label="Email Address"
                     name="email"
                     autoComplete="email"
                   />
-                </Grid>
-                <Grid item xs={12}>
+                </Grid2>
+                <Grid2 size={{ xs: 12 }}>
                   <FormInput
                     name="password"
                     label="Password"
                     type="password"
                     autoComplete="new-password"
                   />
-                </Grid>
-                <Grid item xs={12}>
+                </Grid2>
+                <Grid2 size={{ xs: 12 }}>
                   <FormInput
                     name="confirmPassword"
                     label="Confirm Password"
                     type="password"
                     autoComplete="new-password"
                   />
-                </Grid>
-                <Grid item xs={12}>
+                </Grid2>
+                <Grid2 size={{ xs: 12 }}>
                   <FormCheckbox name="acceptedTerms">
                     I want to receive inspiration, marketing promotions and
                     updates via email.
                   </FormCheckbox>
-                </Grid>
-              </Grid>
+                </Grid2>
+              </Grid2>
               <Button
                 type="submit"
                 fullWidth

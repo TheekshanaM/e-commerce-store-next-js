@@ -1,6 +1,6 @@
 "use client";
 import FormInput from "@/component/form/form-input/FormInput";
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid2 } from "@mui/material";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useToastContext } from "@/hooks/useToastContext";
@@ -60,23 +60,23 @@ export default function SignInForm() {
               onSubmit={handleSubmit}
               sx={{ mt: 3 }}
             >
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
+              <Grid2 container spacing={2}>
+                <Grid2 size={{ xs: 12 }}>
                   <FormInput
                     label="Email Address"
                     name="email"
                     autoComplete="email"
                   />
-                </Grid>
-                <Grid item xs={12}>
+                </Grid2>
+                <Grid2 size={{ xs: 12 }}>
                   <FormInput
                     name="password"
                     label="Password"
                     type="password"
                     autoComplete="new-password"
                   />
-                </Grid>
-              </Grid>
+                </Grid2>
+              </Grid2>
               <Button
                 type="submit"
                 fullWidth
