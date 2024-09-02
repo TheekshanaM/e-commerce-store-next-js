@@ -5,11 +5,12 @@ import {
   CssBaseline,
   Grid2,
   Typography,
-  Link,
+  Link as MUILink,
 } from "@mui/material";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import SignUpForm from "./SignUpForm";
+import Link from "next/link";
 
 export default function SignUP() {
   return (
@@ -35,9 +36,9 @@ export default function SignUP() {
 
           <Grid2 container justifyContent="center">
             <Grid2>
-              <Link href="#" variant="body2">
+              <MUILink href="/sign-in" component={Link} variant="body2">
                 Already have an account? Sign in
-              </Link>
+              </MUILink>
             </Grid2>
           </Grid2>
         </Box>
