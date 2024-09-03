@@ -47,6 +47,7 @@ export default function SignInForm() {
       toast.error({ message: error });
     } else {
       url && router.push(url);
+      router.refresh();
     }
     setSubmitting(false);
   };

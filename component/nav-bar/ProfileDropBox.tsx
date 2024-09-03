@@ -8,10 +8,13 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function ProfileDropBox() {
   const [anchorElUser, setAnchorElUser] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleOpenUserMenu = () => {
     setAnchorElUser(true);
@@ -19,6 +22,13 @@ export default function ProfileDropBox() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(false);
+  };
+
+  const logout = async () => {
+    const { url } = await signOut({ redirect: false, callbackUrl: "/sign-in" });
+    setAnchorElUser(false);
+    router.push(url);
+    router.refresh();
   };
 
   const settings = ["Profile", "Orders", "Logout"];
@@ -44,7 +54,7 @@ export default function ProfileDropBox() {
         onClose={handleCloseUserMenu}
       >
         {settings.map((setting) => (
-          <MenuItem key={setting}>
+          <MenuItem key={setting} onClick={logout}>
             <Typography sx={{ textAlign: "center" }}>{setting}</Typography>
           </MenuItem>
         ))}
