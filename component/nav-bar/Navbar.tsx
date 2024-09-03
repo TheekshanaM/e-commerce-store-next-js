@@ -1,51 +1,101 @@
 import {
   AppBar,
-  Avatar,
   Badge,
   Box,
+  Button,
   IconButton,
-  Menu,
-  MenuItem,
   Toolbar,
   Typography,
 } from "@mui/material";
 import SearchBox from "./SearchBox";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import ProfileDropBox from "./ProfileDropBox";
+import { auth } from "@/auth";
+import Link from "next/link";
+import NavigationDrawer from "./NavigationDrawer";
 
-export default function Navbar() {
+export default async function Navbar() {
+  const session = await auth();
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            MUI
-          </Typography>
+    <>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <NavigationDrawer />
 
-          <Box sx={{ flexGrow: 1 }} />
+            <Button
+              href="/"
+              disableRipple
+              component={Link}
+              sx={{
+                my: 2,
+                color: "white",
+                display: "block",
+                textTransform: "none",
+              }}
+            >
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ display: { xs: "none", md: "block" } }}
+              >
+                MUI
+              </Typography>
+            </Button>
 
-          <SearchBox />
+            <Box sx={{ flexGrow: 1 }} />
 
-          <IconButton
-            size="large"
-            aria-label="show 4 new mails"
-            color="inherit"
-          >
-            <Badge badgeContent={4} color="error">
-              <AddShoppingCartIcon />
-            </Badge>
-          </IconButton>
+            <SearchBox />
 
-          <Box sx={{ flexGrow: 1 }} />
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+            >
+              <Badge badgeContent={4} color="error">
+                <AddShoppingCartIcon />
+              </Badge>
+            </IconButton>
 
-          <ProfileDropBox />
-        </Toolbar>
-      </AppBar>
-    </Box>
+            <Box sx={{ flexGrow: 1 }} />
+
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              {!session && (
+                <>
+                  <Button
+                    href="/sign-in"
+                    component={Link}
+                    sx={{
+                      my: 2,
+                      color: "white",
+                      display: "block",
+                      textTransform: "none",
+                    }}
+                  >
+                    Sign in
+                  </Button>
+                  <Button
+                    href="/sign-up"
+                    component={Link}
+                    sx={{
+                      my: 2,
+                      color: "white",
+                      display: "block",
+                      textTransform: "none",
+                    }}
+                  >
+                    Sign up
+                  </Button>
+                </>
+              )}
+
+              {session && <ProfileDropBox />}
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </>
   );
 }

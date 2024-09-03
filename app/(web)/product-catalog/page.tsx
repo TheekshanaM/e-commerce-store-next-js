@@ -2,6 +2,7 @@
 import { useSearchParams } from "next/navigation";
 import ProductCard from "./components/ProductCard";
 import { Grid2 } from "@mui/material";
+import { useSession } from "next-auth/react";
 
 const productList = [
   {
@@ -56,7 +57,10 @@ export default function ProductCatalog() {
   // const {}=useRouter()
   const category = searchParams.get("category");
   const filter = searchParams.get("filter");
-  console.log(category, filter);
+  // console.log(category, filter);
+
+  // const session = useSession();
+  // console.log("session<<<<", session);
 
   return (
     <>
