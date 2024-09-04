@@ -3,11 +3,6 @@ import { withAuth } from "next-auth/middleware";
 
 export default withAuth(
   function middleware(req) {
-    console.log("cccccccccccccccc");
-
-    console.log("req", req.nextauth);
-    // console.log(req.nextauth.token.role);
-
     // if (
     //   req.nextUrl.pathname.startsWith("/CreateUser") &&
     //   req.nextauth.token.role != "admin"
@@ -19,7 +14,10 @@ export default withAuth(
   {
     secret: process.env.AUTH_SECRET,
     callbacks: {
-      authorized: ({ token }) => !!token,
+      authorized: ({ token }) => {
+        // return !!token;
+        return true;
+      },
     },
   }
 );

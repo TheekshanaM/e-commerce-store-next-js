@@ -2,6 +2,7 @@
 
 import SearchIcon from "@mui/icons-material/Search";
 import { alpha, InputBase, styled } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -24,11 +25,12 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   height: "100%",
   position: "absolute",
   right: 0,
-  pointerEvents: "none",
+  // pointerEvents: "none",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   backgroundColor: alpha(theme.palette.common.white, 0.15),
+  cursor: "pointer",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -46,9 +48,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchBox() {
+  const router = useRouter();
+
+  const search = () => {
+    router.push("/product-catalog");
+    // router.refresh();
+  };
   return (
     <Search>
-      <SearchIconWrapper>
+      <SearchIconWrapper onClick={search}>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase

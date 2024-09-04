@@ -1,8 +1,7 @@
-"use client";
-import { useSearchParams } from "next/navigation";
+// "use client";
+
 import ProductCard from "./components/ProductCard";
 import { Grid2 } from "@mui/material";
-import { useSession } from "next-auth/react";
 
 const productList = [
   {
@@ -53,15 +52,6 @@ const productList = [
 ];
 
 export default function ProductCatalog() {
-  const searchParams = useSearchParams();
-  // const {}=useRouter()
-  const category = searchParams.get("category");
-  const filter = searchParams.get("filter");
-  // console.log(category, filter);
-
-  // const session = useSession();
-  // console.log("session<<<<", session);
-
   return (
     <>
       <Grid2 container spacing={2}>

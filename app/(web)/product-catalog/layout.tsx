@@ -9,10 +9,18 @@ import {
 import { ReactNode } from "react";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import SortBy from "./components/SortBy";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
-export default function ProductCatalogLayout({
+export default async function ProductCatalogLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
+  const session = await auth();
+
+  if (!session) {
+    redirect(`/sign-in?callbackUrl=/product-catalog`);
+  }
+
   return (
     <Grid2 container spacing={2} sx={{ mt: 2 }}>
       {/* side filter */}
