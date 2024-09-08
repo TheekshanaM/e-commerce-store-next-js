@@ -11,9 +11,10 @@ export async function searchProduct({
   productName,
   pageNo,
   pageSize,
+  sort,
 }: productSearchParams): Promise<actionResponse<searchProductResult>> {
   try {
-    const response = await getProducts({ productName, pageNo, pageSize });
+    const response = await getProducts({ productName, pageNo, pageSize, sort });
 
     return { success: true, data: response };
   } catch (error) {

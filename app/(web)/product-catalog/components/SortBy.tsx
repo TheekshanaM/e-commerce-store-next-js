@@ -1,14 +1,19 @@
 "use client";
 import FormSelect from "@/component/form/form-select/FormSelect";
 import FormikWrapper from "@/component/form/formik-wrapper/FormikWrapper";
+import { productSortOptionType } from "@/lib/types/productsTypes";
 import { Box, SelectChangeEvent } from "@mui/material";
 import { FormikErrors } from "formik";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SortBy() {
-  const options = [
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const options: Array<productSortOptionType> = [
     { value: "best-match", label: "Best match" },
     { value: "price-low-to-high", label: "Price low to high" },
-    { value: "price-heigh-to-low", label: "Price high to low" },
+    { value: "price-high-to-low", label: "Price high to low" },
   ];
 
   const handleChange = (
@@ -21,8 +26,19 @@ export default function SortBy() {
       sort: string;
     }>>
   ) => {
-    setFieldValue(e.target.name, e.target.value);
-    console.log(e.target);
+    const value = e.target.value as string;
+    setFieldValue(e.target.name, value);
+
+    const params = new URLSearchParams(searchParams);
+    if (value) {
+      params.set("sort", value);
+      router.push(`/product-catalog?${params.toString()}`);
+      return;
+    } else {
+      params.delete("sort");
+      router.push(`/`);
+      return;
+    }
   };
 
   return (

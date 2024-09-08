@@ -2,21 +2,23 @@
 
 import { searchProduct } from "@/lib/actions/product-action";
 import ProductCard from "./components/ProductCard";
-import { Grid2, Pagination } from "@mui/material";
-import { IProductCard } from "@/lib/types/productsTypes";
+import { Grid2 } from "@mui/material";
+import { productSortType } from "@/lib/types/productsTypes";
 import ProductPagination from "./components/ProductPagination";
 
 export default async function ProductCatalog({
-  searchParams: { pn, page },
+  searchParams: { pn, page, sort },
 }: SearchParamProps) {
-  const pageSize = 3;
+  const pageSize = 12;
   const productName = (pn as string) || "";
   const pageNo = Number(page as string) || 1;
+  const sortingCriteria = (sort as productSortType) || "";
 
   const { data, error, success } = await searchProduct({
     productName,
     pageNo,
     pageSize,
+    sort: sortingCriteria,
   });
 
   if (!success && error) {

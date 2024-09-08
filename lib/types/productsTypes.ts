@@ -1,3 +1,4 @@
+import { PRODUCT_SORT } from "./../../constant/product";
 export interface IProductCard {
   _id: number;
   imageUrl: string;
@@ -12,9 +13,20 @@ export interface productSearchParams {
   productName: string;
   pageNo: number;
   pageSize: number;
+  sort?: productSortType;
 }
 
 export interface searchProductResult {
   products: Array<IProductCard>;
   totalPages: number;
 }
+
+export type productSortType =
+  | "best-match"
+  | "price-low-to-high"
+  | "price-high-to-low";
+
+export type productSortOptionType = {
+  value: productSortType;
+  label: string;
+};

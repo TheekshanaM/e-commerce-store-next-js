@@ -1,3 +1,4 @@
+import { PRODUCT_SORT } from "@/constant/product";
 import { ProductModel } from "../models/product";
 import { productSearchParams } from "../types/productsTypes";
 import dbConnect from "./db-connect";
@@ -6,6 +7,7 @@ export default async function getProducts({
   productName,
   pageNo,
   pageSize,
+  sort = "best-match",
 }: productSearchParams) {
   await dbConnect();
 
@@ -13,8 +15,11 @@ export default async function getProducts({
 
   // Pagination setup: skip and limit
   const skip = (pageNo - 1) * pageSize;
+  //   set sorting columns
+  const sortingObject = PRODUCT_SORT[sort] || {};
 
   const products = await ProductModel.find(query)
+    .sort(sortingObject)
     .skip(skip)
     .limit(pageSize)
     .exec();
