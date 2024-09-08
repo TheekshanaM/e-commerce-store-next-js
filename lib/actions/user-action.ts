@@ -8,7 +8,7 @@ import { actionResponse } from "../types/actionTypes";
 
 export async function signUpAction(
   formData: TSignUpForm
-): Promise<actionResponse> {
+): Promise<actionResponse<Omit<IUser, "password">>> {
   try {
     const userSchema = Yup.object({
       firstName: Yup.string()
@@ -57,7 +57,7 @@ export async function signUpAction(
 
 export async function loginAction(
   credentials: TLogin
-): Promise<actionResponse> {
+): Promise<actionResponse<Omit<IUser, "password">>> {
   const userSchema = Yup.object({
     password: Yup.string()
       .required("password is required")
