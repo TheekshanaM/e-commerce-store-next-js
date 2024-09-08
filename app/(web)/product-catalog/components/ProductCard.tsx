@@ -8,7 +8,7 @@ export default function ProductCard({
   discount,
   soldCount,
   rating,
-}: IProductCard) {
+}: Omit<IProductCard, "_id">) {
   return (
     <Card>
       {/* Product Image */}

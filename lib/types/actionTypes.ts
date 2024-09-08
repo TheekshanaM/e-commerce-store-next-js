@@ -1,5 +1,5 @@
-export interface actionResponse {
+export interface actionResponse<T> {
   success: boolean;
-  data?: object;
+  data?: T;
   error?: string;
 }
