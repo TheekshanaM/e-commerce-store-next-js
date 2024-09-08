@@ -1,7 +1,7 @@
 "use client";
 import { Box, Pagination, Stack } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 export default function ProductPagination({
   noOfPages,
@@ -13,6 +13,10 @@ export default function ProductPagination({
   const router = useRouter();
   const searchParams = useSearchParams();
   const [page, setPage] = useState(pageNo);
+
+  useEffect(() => {
+    setPage(pageNo);
+  }, [pageNo]);
 
   const handleChange = (event: ChangeEvent<unknown>, value: number) => {
     setPage(value);

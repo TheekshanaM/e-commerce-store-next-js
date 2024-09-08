@@ -72,7 +72,7 @@ export default function SearchBox() {
   };
   // set params to find products
   const searchProduct = () => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams();
     if (search) {
       params.set("pn", search);
     } else {
