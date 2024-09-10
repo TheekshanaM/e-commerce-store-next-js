@@ -12,14 +12,8 @@ export default function ProductPagination({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [page, setPage] = useState(pageNo);
-
-  useEffect(() => {
-    setPage(pageNo);
-  }, [pageNo]);
 
   const handleChange = (event: ChangeEvent<unknown>, value: number) => {
-    setPage(value);
     const params = new URLSearchParams(searchParams);
     if (value) {
       params.set("page", `${value}`);
@@ -34,7 +28,7 @@ export default function ProductPagination({
       <Stack alignItems="center">
         <Pagination
           count={noOfPages}
-          page={page}
+          page={pageNo}
           onChange={handleChange}
           variant="outlined"
           shape="rounded"

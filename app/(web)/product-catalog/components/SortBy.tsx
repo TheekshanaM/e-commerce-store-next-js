@@ -5,10 +5,14 @@ import { productSortOptionType } from "@/lib/types/productsTypes";
 import { Box, SelectChangeEvent } from "@mui/material";
 import { FormikErrors } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function SortBy() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  // const [sortBy, setSortBy] = useState("best-match");
+
+  const sortBy = searchParams.get("sort") || "best-match";
 
   const options: Array<productSortOptionType> = [
     { value: "best-match", label: "Best match" },
@@ -32,19 +36,21 @@ export default function SortBy() {
     const params = new URLSearchParams(searchParams);
     if (value) {
       params.set("sort", value);
+      params.set("page", "1");
       router.push(`/product-catalog?${params.toString()}`);
-      return;
     } else {
       params.delete("sort");
       router.push(`/`);
-      return;
     }
   };
 
   return (
     <Box sx={{ display: "flex", justifyContent: "end" }}>
       <Box sx={{ width: 200 }}>
-        <FormikWrapper initialValues={{ sort: "best-match" }}>
+        <FormikWrapper
+          // enableReinitialize={true}
+          initialValues={{ sort: sortBy }}
+        >
           {(formik) => (
             <FormSelect
               name="sort"
