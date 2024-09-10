@@ -12,9 +12,18 @@ export async function searchProduct({
   pageNo,
   pageSize,
   sort,
+  minimumPrice,
+  maximumPrice,
 }: productSearchParams): Promise<actionResponse<searchProductResult>> {
   try {
-    const response = await getProducts({ productName, pageNo, pageSize, sort });
+    const response = await getProducts({
+      productName,
+      pageNo,
+      pageSize,
+      sort,
+      minimumPrice,
+      maximumPrice,
+    });
 
     return { success: true, data: response };
   } catch (error) {

@@ -8,10 +8,18 @@ export default async function getProducts({
   pageNo,
   pageSize,
   sort = "best-match",
+  minimumPrice,
+  maximumPrice,
 }: productSearchParams) {
   await dbConnect();
 
-  const query = { name: new RegExp(productName, "i") };
+  const query = {
+    name: new RegExp(productName, "i"),
+    $and: [
+      minimumPrice ? { price: { $gt: minimumPrice } } : {},
+      maximumPrice ? { price: { $lt: maximumPrice } } : {},
+    ],
+  };
 
   // Pagination setup: skip and limit
   const skip = (pageNo - 1) * pageSize;

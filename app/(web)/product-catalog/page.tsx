@@ -1,27 +1,23 @@
 import { searchProduct } from "@/lib/actions/product-action";
 import ProductCard from "./components/ProductCard";
-import {
-  Grid2,
-  IconButton,
-  Rating,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Grid2, Stack, Typography } from "@mui/material";
 import { productSortType } from "@/lib/types/productsTypes";
 import ProductPagination from "./components/ProductPagination";
 import SortBy from "./components/SortBy";
-import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import { redirect } from "next/navigation";
+import ProductFilter from "./components/ProductFilter";
 
 export default async function ProductCatalog({
-  searchParams: { pn, page, sort },
+  searchParams: { pn, page, sort, minPrice, maxPrice, rating },
 }: SearchParamProps) {
   const pageSize = 12;
 
   const productName = (pn as string) || "";
   const pageNo = Number(page as string) || 1;
   const sortingCriteria = (sort as productSortType) || "";
+  const minimumPrice = Number(minPrice as string) || null;
+  const maximumPrice = Number(maxPrice as string) || null;
+  const ratingValue = Number(rating as string) || null;
 
   if (productName === "") {
     redirect("/");
@@ -31,6 +27,8 @@ export default async function ProductCatalog({
     pageNo,
     pageSize,
     sort: sortingCriteria,
+    minimumPrice,
+    maximumPrice,
   });
 
   return (
@@ -45,37 +43,12 @@ export default async function ProductCatalog({
           <Typography variant="h6" component="h2">
             Filters
           </Typography>
-          {/* price rage filter */}
-          <Typography variant="body1" sx={{ mt: 1 }}>
-            Price
-          </Typography>
-          <Grid2 container spacing={1}>
-            <Grid2 size="grow">
-              <TextField size="small" />
-            </Grid2>
-            <Grid2 size="grow">
-              <TextField size="small" />
-            </Grid2>
-            <Grid2>
-              <IconButton
-                aria-label="go"
-                sx={{ borderRadius: 1, backgroundColor: "green" }}
-              >
-                <PlayArrowRoundedIcon />
-              </IconButton>
-            </Grid2>
-          </Grid2>
-          {/* Rating */}
-          <Typography variant="body1" sx={{ mt: 1 }}>
-            Rating
-          </Typography>
-          <Stack spacing={1}>
-            <Rating size="small" name="read-only" value={5} readOnly />
-            <Rating size="small" name="read-only" value={4} readOnly />
-            <Rating size="small" name="read-only" value={3} readOnly />
-            <Rating size="small" name="read-only" value={2} readOnly />
-            <Rating size="small" name="read-only" value={1} readOnly />
-          </Stack>
+
+          <ProductFilter
+            minimumPrice={minimumPrice}
+            maximumPrice={maximumPrice}
+            ratingValue={maximumPrice}
+          />
         </Grid2>
 
         <Grid2 size={{ md: 9, lg: 9, xl: 9 }}>
