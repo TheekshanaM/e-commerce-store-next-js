@@ -33,3 +33,14 @@ export type productSortOptionType = {
   value: productSortType;
   label: string;
 };
+
+export interface productDetails {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+  images: Array<string>;
+  rating: number;
+  reviews: number;
+  specifications: Array<{ key: string; value: string }>;
+}
