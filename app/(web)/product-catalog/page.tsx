@@ -15,8 +15,8 @@ export default async function ProductCatalog({
   const productName = (pn as string) || "";
   const pageNo = Number(page as string) || 1;
   const sortingCriteria = (sort as productSortType) || "";
-  const minimumPrice = Number(minPrice as string) || null;
-  const maximumPrice = Number(maxPrice as string) || null;
+  const minimumPrice = (minPrice as string) || "";
+  const maximumPrice = (maxPrice as string) || "";
   const ratingValue = Number(rating as string) || null;
 
   if (productName === "") {
@@ -29,6 +29,7 @@ export default async function ProductCatalog({
     sort: sortingCriteria,
     minimumPrice,
     maximumPrice,
+    ratingValue,
   });
 
   return (
@@ -47,7 +48,7 @@ export default async function ProductCatalog({
           <ProductFilter
             minimumPrice={minimumPrice}
             maximumPrice={maximumPrice}
-            ratingValue={maximumPrice}
+            ratingValue={ratingValue}
           />
         </Grid2>
 

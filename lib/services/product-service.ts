@@ -10,14 +10,16 @@ export default async function getProducts({
   sort = "best-match",
   minimumPrice,
   maximumPrice,
+  ratingValue,
 }: productSearchParams) {
   await dbConnect();
 
   const query = {
     name: new RegExp(productName, "i"),
     $and: [
-      minimumPrice ? { price: { $gt: minimumPrice } } : {},
-      maximumPrice ? { price: { $lt: maximumPrice } } : {},
+      minimumPrice !== "" ? { price: { $gt: minimumPrice } } : {},
+      maximumPrice !== "" ? { price: { $lt: maximumPrice } } : {},
+      ratingValue ? { rating: { $gte: ratingValue } } : {},
     ],
   };
 

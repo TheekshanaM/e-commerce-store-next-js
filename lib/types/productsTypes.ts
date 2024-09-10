@@ -14,8 +14,9 @@ export interface productSearchParams {
   pageNo: number;
   pageSize: number;
   sort?: productSortType;
-  minimumPrice: number | null;
-  maximumPrice: number | null;
+  minimumPrice: string;
+  maximumPrice: string;
+  ratingValue: number | null;
 }
 
 export interface searchProductResult {

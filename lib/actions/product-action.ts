@@ -14,6 +14,7 @@ export async function searchProduct({
   sort,
   minimumPrice,
   maximumPrice,
+  ratingValue,
 }: productSearchParams): Promise<actionResponse<searchProductResult>> {
   try {
     const response = await getProducts({
@@ -23,6 +24,7 @@ export async function searchProduct({
       sort,
       minimumPrice,
       maximumPrice,
+      ratingValue,
     });
 
     return { success: true, data: response };

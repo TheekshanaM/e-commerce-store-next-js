@@ -1,14 +1,21 @@
 "use client";
 
-import { Grid2, IconButton, Rating, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Grid2,
+  IconButton,
+  Rating,
+  Stack,
+  Typography,
+} from "@mui/material";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import { Form, Formik } from "formik";
 import FormInput from "@/component/form/form-input/FormInput";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface IPriceFilter {
-  minPrice: number | null;
-  maxPrice: number | null;
+  minPrice: string;
+  maxPrice: string;
 }
 
 function ProductFilter({
@@ -16,10 +23,11 @@ function ProductFilter({
   maximumPrice,
   ratingValue,
 }: {
-  minimumPrice: number | null;
-  maximumPrice: number | null;
+  minimumPrice: string;
+  maximumPrice: string;
   ratingValue: number | null;
 }) {
+  const ratingArray = [5, 4, 3, 2, 1];
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -42,6 +50,19 @@ function ProductFilter({
 
     router.push(`/product-catalog?${params.toString()}`);
   };
+
+  const setRatingFilter = (rating: number) => {
+    const params = new URLSearchParams(searchParams);
+    if (Number(params.get("rating")) === rating) {
+      params.delete("rating");
+    } else {
+      params.set("rating", `${rating}`);
+    }
+    params.set("page", "1");
+
+    router.push(`/product-catalog?${params.toString()}`);
+  };
+
   return (
     <>
       {/* price rage filter */}
@@ -49,7 +70,11 @@ function ProductFilter({
         Price
       </Typography>
 
-      <Formik initialValues={initialValues} onSubmit={handleFormSubmit}>
+      <Formik
+        enableReinitialize
+        initialValues={initialValues}
+        onSubmit={handleFormSubmit}
+      >
         <Form>
           <Grid2 container spacing={1}>
             <Grid2 size="grow">
@@ -76,11 +101,20 @@ function ProductFilter({
         Rating
       </Typography>
       <Stack spacing={1}>
-        <Rating size="small" name="read-only" value={5} readOnly />
-        <Rating size="small" name="read-only" value={4} readOnly />
-        <Rating size="small" name="read-only" value={3} readOnly />
-        <Rating size="small" name="read-only" value={2} readOnly />
-        <Rating size="small" name="read-only" value={1} readOnly />
+        {ratingArray.map((item) => (
+          <Box
+            key={item}
+            sx={{ cursor: "pointer" }}
+            onClick={() => setRatingFilter(item)}
+          >
+            <Rating
+              size={ratingValue === item ? "medium" : "small"}
+              name="read-only"
+              value={item}
+              readOnly
+            />
+          </Box>
+        ))}
       </Stack>
     </>
   );
