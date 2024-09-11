@@ -1,6 +1,3 @@
-"use client";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-
 import {
   Box,
   CardContent,
@@ -8,13 +5,15 @@ import {
   Divider,
   Grid2,
   Rating,
-  Button,
   Typography,
 } from "@mui/material";
 import ImagePreview from "../components/ImagePreview";
-import { productDetails } from "@/lib/types/productsTypes";
+import { IProductDetails } from "@/lib/types/productsTypes";
+import PurchaseConfiguration from "../components/PurchaseConfiguration";
+import RatingView from "../components/RatingView";
+import ProductReview from "../components/ProductReview";
 
-const product: productDetails = {
+const product: IProductDetails = {
   id: 1,
   name: "Awesome Product",
   price: 999.99,
@@ -25,16 +24,28 @@ const product: productDetails = {
     "https://via.placeholder.com/400/FF0000",
     "https://via.placeholder.com/400/FFFF00",
     "https://via.placeholder.com/400/00FF00",
-    "https://via.placeholder.com/400/FF0000",
-    "https://via.placeholder.com/400/FFFF00",
+    "https://via.placeholder.com/400/FF0050",
+    "https://via.placeholder.com/400/F7FF00",
   ],
-  rating: 4.5,
+  colors: {
+    "#FFFF00": "https://via.placeholder.com/400/FFFF00",
+    "#0000FF": "https://via.placeholder.com/400/0000FF",
+  },
+  averageRating: 4.3,
   reviews: 25,
   specifications: [
     { key: "Color", value: "Black" },
     { key: "Size", value: "Medium" },
     { key: "Material", value: "Cotton" },
   ],
+  totalRatings: 150,
+  ratingData: {
+    5: 90,
+    4: 40,
+    3: 10,
+    2: 5,
+    1: 5,
+  },
 };
 
 export default function Products() {
@@ -53,7 +64,7 @@ export default function Products() {
               {product.name}
             </Typography>
             <Rating
-              value={product.rating}
+              value={product.averageRating}
               precision={0.1}
               readOnly
               size="small"
@@ -67,39 +78,38 @@ export default function Products() {
             <Typography variant="body1" gutterBottom>
               {product.description}
             </Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<ShoppingCartIcon />}
-              sx={{ marginTop: 2 }}
-            >
-              Add to Cart
-            </Button>
+
+            <PurchaseConfiguration />
           </CardContent>
         </Grid2>
-
-        {/* Product Specifications */}
-        <Grid2 size={{ xs: 12 }}>
-          <Divider sx={{ marginY: 3 }} />
-          <Typography variant="h5" gutterBottom>
-            Specifications
-          </Typography>
-          {product.specifications.map((spec, index) => (
-            <Box key={index} sx={{ marginBottom: 2 }}>
-              <Typography variant="subtitle1" component="span">
-                {spec.key}:
-              </Typography>
-              <Typography
-                variant="body1"
-                component="span"
-                sx={{ marginLeft: 1 }}
-              >
-                {spec.value}
-              </Typography>
-            </Box>
-          ))}
-        </Grid2>
       </Grid2>
+
+      {/* Product Specifications */}
+
+      <Divider sx={{ marginY: 8 }} />
+      <Typography variant="h5" gutterBottom>
+        Specifications
+      </Typography>
+      {product.specifications.map((spec, index) => (
+        <Box key={index} sx={{ marginBottom: 2 }}>
+          <Typography variant="subtitle1" component="span">
+            {spec.key}:
+          </Typography>
+          <Typography variant="body1" component="span" sx={{ marginLeft: 1 }}>
+            {spec.value}
+          </Typography>
+        </Box>
+      ))}
+
+      <Divider sx={{ marginY: 8 }} />
+
+      <RatingView
+        averageRating={product.averageRating}
+        totalRatings={product.totalRatings}
+        ratingData={product.ratingData}
+      />
+
+      <ProductReview />
     </Container>
   );
 }

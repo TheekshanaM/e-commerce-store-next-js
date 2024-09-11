@@ -34,13 +34,29 @@ export type productSortOptionType = {
   label: string;
 };
 
-export interface productDetails {
+export interface IProductDetails {
   id: number;
   name: string;
   price: number;
   description: string;
   images: Array<string>;
-  rating: number;
+  colors: { [key: string]: string };
+  averageRating: number;
   reviews: number;
   specifications: Array<{ key: string; value: string }>;
+  totalRatings: number;
+  ratingData: { [key: string]: number };
+}
+
+export type TRatingView = Pick<
+  IProductDetails,
+  "averageRating" | "totalRatings" | "ratingData"
+>;
+
+export interface IReview {
+  rating: number;
+  name: string;
+  date: string;
+  comment: string;
+  reply: { name: string; date: string; comment: string } | null;
 }
