@@ -1,11 +1,12 @@
 import { searchProduct } from "@/lib/actions/product-action";
 import ProductCard from "./components/ProductCard";
-import { Grid2, Stack, Typography } from "@mui/material";
+import { Grid2, Stack, Typography, Link as MUILink } from "@mui/material";
 import { productSortType } from "@/lib/types/productsTypes";
 import ProductPagination from "./components/ProductPagination";
 import SortBy from "./components/SortBy";
 import { redirect } from "next/navigation";
 import ProductFilter from "./components/ProductFilter";
+import Link from "next/link";
 
 export default async function ProductCatalog({
   searchParams: { pn, page, sort, minPrice, maxPrice, rating },
@@ -14,9 +15,9 @@ export default async function ProductCatalog({
 
   const productName = (pn as string) || "";
   const pageNo = Number(page as string) || 1;
-  const sortingCriteria = (sort as productSortType) || "";
-  const minimumPrice = (minPrice as string) || "";
-  const maximumPrice = (maxPrice as string) || "";
+  const sortingCriteria = (sort as productSortType) || "best-match";
+  const minimumPrice = Number(minPrice as string) || null;
+  const maximumPrice = Number(maxPrice as string) || null;
   const ratingValue = Number(rating as string) || null;
 
   if (productName === "") {
@@ -56,22 +57,36 @@ export default async function ProductCatalog({
           <Stack>
             <SortBy />
 
-            {success ? (
-              <Grid2 container spacing={2}>
-                {data?.products.map(({ _id, ...product }) => (
-                  <Grid2 key={_id} size={{ xs: 6, sm: 6, md: 4, lg: 3, xl: 3 }}>
-                    <ProductCard {...product} />
-                  </Grid2>
-                ))}
-              </Grid2>
+            {success && data?.products?.length ? (
+              <>
+                <Grid2 container spacing={2}>
+                  {data?.products.map(({ _id, ...product }) => (
+                    <Grid2
+                      key={_id}
+                      size={{ xs: 6, sm: 6, md: 4, lg: 3, xl: 3 }}
+                      sx={{ ":hover": { boxShadow: "0px 0px 10px #888888" } }}
+                    >
+                      <MUILink
+                        href={"/product/" + _id}
+                        component={Link}
+                        sx={{
+                          textDecoration: "none",
+                        }}
+                      >
+                        <ProductCard {...product} />
+                      </MUILink>
+                    </Grid2>
+                  ))}
+                </Grid2>
+
+                <ProductPagination
+                  noOfPages={Math.ceil(data?.totalItems / pageSize) || 1}
+                  pageNo={pageNo}
+                />
+              </>
             ) : (
               <Typography>No Data</Typography>
             )}
-
-            <ProductPagination
-              noOfPages={data?.totalPages || 0}
-              pageNo={pageNo}
-            />
           </Stack>
         </Grid2>
       </Grid2>

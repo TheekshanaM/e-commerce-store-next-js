@@ -14,8 +14,8 @@ import FormInput from "@/component/form/form-input/FormInput";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface IPriceFilter {
-  minPrice: string;
-  maxPrice: string;
+  minPrice: number | null;
+  maxPrice: number | null;
 }
 
 function ProductFilter({
@@ -23,8 +23,8 @@ function ProductFilter({
   maximumPrice,
   ratingValue,
 }: {
-  minimumPrice: string;
-  maximumPrice: string;
+  minimumPrice: number | null;
+  maximumPrice: number | null;
   ratingValue: number | null;
 }) {
   const ratingArray = [5, 4, 3, 2, 1];

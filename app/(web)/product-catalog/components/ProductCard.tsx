@@ -1,14 +1,18 @@
 import { IProductCard } from "@/lib/types/productsTypes";
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import StarIcon from "@mui/icons-material/Star";
 
 export default function ProductCard({
   imageUrl,
   name,
   price,
-  discount,
+  sellingPrice,
   soldCount,
   rating,
+  ratingCount,
 }: Omit<IProductCard, "_id">) {
+  const discount = Math.ceil(((price - sellingPrice) / price) * 100);
+
   return (
     <Card>
       {/* Product Image */}
@@ -37,7 +41,7 @@ export default function ProductCard({
 
         {/* Product Price */}
         <Typography variant="body1" color="text.primary">
-          ${price.toFixed(2)}
+          ${sellingPrice.toFixed(2)}
         </Typography>
 
         {/* Discount Percentage */}
@@ -48,13 +52,23 @@ export default function ProductCard({
         )}
 
         {/* Sold Items Count and Rating */}
-        <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            mt: 1,
+          }}
+        >
           <Typography variant="body2" color="text.secondary">
-            Sold: {soldCount}
+            Sold: {soldCount || 0}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Rating: {rating}⭐
-          </Typography>
+          <Box sx={{ display: "flex" }}>
+            <Typography variant="body2" color="text.secondary">
+              {/* Rating: */}
+              {rating || 0}({ratingCount})
+            </Typography>
+            <StarIcon fontSize="small" color="primary" />
+          </Box>
         </Box>
       </CardContent>
     </Card>

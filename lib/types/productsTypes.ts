@@ -4,9 +4,10 @@ export interface IProductCard {
   imageUrl: string;
   name: string;
   price: number;
-  discount: number;
+  sellingPrice: number;
   soldCount: number;
   rating: number;
+  ratingCount: number;
 }
 
 export interface productSearchParams {
@@ -14,14 +15,14 @@ export interface productSearchParams {
   pageNo: number;
   pageSize: number;
   sort?: productSortType;
-  minimumPrice: string;
-  maximumPrice: string;
+  minimumPrice: number | null;
+  maximumPrice: number | null;
   ratingValue: number | null;
 }
 
 export interface searchProductResult {
   products: Array<IProductCard>;
-  totalPages: number;
+  totalItems: number;
 }
 
 export type productSortType =
